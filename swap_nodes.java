@@ -6,7 +6,7 @@
 		this.setData(data);
 		this.next = null;
 	}
-
+  
 	public T getData() {
 		return data;
 	}
