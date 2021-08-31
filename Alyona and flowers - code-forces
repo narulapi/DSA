@@ -1,0 +1,70 @@
+https://codeforces.com/contest/740/problem/B
+
+
+
+import java.util.*;
+import java.io.*;
+
+public class Sample {
+	public static void main (String [] args) throws Exception{
+		
+		BufferedReader br = new BufferedReader(
+	            new InputStreamReader(System.in));
+		
+		String s = br.readLine();
+		
+		
+	
+		
+		String temp[] = s.split(" ");
+		int n = Integer.parseInt(temp[0]);
+		int m = Integer.parseInt(temp[1]);
+		
+		int arr[] = new int[n];
+		
+		s=br.readLine();
+		temp=s.split(" ");
+		
+		for (int i=0;i<n;i++) {
+			arr[i]=Integer.parseInt(temp[i]);
+		}
+		
+		int p_sum[] = new int[n];
+		
+		p_sum[0]=arr[0];
+		
+		for (int i=1;i<n;i++) {
+			
+			p_sum[i]=arr[i]+p_sum[i-1];
+		}
+		
+		int ans =0;
+		
+		for (int k=0;k<m;k++) {
+			
+			s=br.readLine();
+			temp=s.split(" ");
+			
+			int i=Integer.parseInt(temp[0])-1;
+			int j=Integer.parseInt(temp[1])-1;
+			int sum=0;
+			if (i>0) {
+				sum = p_sum[j]-p_sum[i-1];
+			} else {
+				sum = p_sum[j];
+			}
+			
+			if (sum>0) {
+				ans =ans + sum;
+			}
+		}
+		
+		
+		
+		System.out.println(ans);
+		
+		
+		
+	}
+
+}
