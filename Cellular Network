@@ -1,0 +1,91 @@
+https://codeforces.com/contest/702/problem/C
+
+
+import java.io.*;
+
+
+public class Sample {
+	public static long mod (long a) {
+		if (a < 0) {
+			return a * -1;
+		} 
+		return a;
+	}
+	
+	public static int getNearestTower (long arr[],long to_be_search,int l,int r) {
+		
+		if (l==r) {
+			return l;
+		}
+		if (r==(l+1)) {
+			long diff1 = mod (to_be_search-arr[l]);
+			long diff2 = mod (to_be_search-arr[r]);
+			if (diff1<diff2) {
+				return l;
+			} else {
+				return r;
+			}
+			
+		}
+		
+		int mid = (l+r)/2;
+		
+		if (arr[mid]==to_be_search) {
+			return mid;
+		}
+		
+		if (arr[mid]<to_be_search) {
+			return getNearestTower (arr,to_be_search,mid,r);
+		} else {
+			return getNearestTower (arr,to_be_search,l,mid);
+		}
+		
+	}
+	
+	public static void main(String args[]) throws Exception{
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String s = br.readLine();
+		
+		String [] temp = s.split(" ");
+		
+		int num_of_city=Integer.parseInt(temp[0]);
+		int num_of_tow=Integer.parseInt(temp[1]);
+		
+		long city_cor[] = new long[num_of_city];
+		long tow_cor[] = new long[num_of_tow];
+		
+		s=br.readLine();
+		temp = s.split(" ");
+		
+		for(int i=0;i<num_of_city;i++) {
+			city_cor[i]=Integer.parseInt(temp[i]);
+		}
+		
+		s=br.readLine();
+		temp = s.split(" ");
+		
+		for(int i=0;i<num_of_tow;i++) {
+			tow_cor[i]=Integer.parseInt(temp[i]);
+		}
+		
+		long ans = Long.MIN_VALUE;
+		
+		for (int i=0;i<num_of_city;i++) {
+			int nearest_tower = getNearestTower(tow_cor,city_cor[i],0,num_of_tow-1);
+			
+			long dist = mod (city_cor[i]-tow_cor[nearest_tower]);
+			if (dist>ans) {
+				ans=dist;
+			}
+		}
+		
+		
+		System.out.println(ans);
+		
+		
+		
+		
+		
+	}
+}
