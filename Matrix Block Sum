@@ -1,0 +1,96 @@
+https://leetcode.com/problems/matrix-block-sum/
+
+
+class Solution {
+    
+    public int getSum(int arr[][],int topi,int topj,int bottomi,int bottomj) {
+        int sum = arr[bottomi][bottomj];
+        if (topi-1 >=0) {
+            sum=sum-arr[topi-1][bottomj];
+        }
+        if (topj-1>=0) {
+            sum=sum-arr[bottomi][topj-1];
+        }
+        
+        if (topi-1 >=0 && topj-1>=0) {
+            sum=sum+arr[topi-1][topj-1];
+        }
+        
+        return sum;
+    }
+    public int[][] matrixBlockSum(int[][] mat, int k) {
+        
+        
+        
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        
+        int sum[][] = new int[n][m];
+        
+        sum[0][0]=mat[0][0];
+        
+        for (int i=1;i<n;i++) {
+            sum[i][0]=mat[i][0]+sum[i-1][0];
+        }
+        
+        for (int j=1;j<m;j++) {
+            sum[0][j]=mat[0][j]+sum[0][j-1];
+        }
+        
+        
+        for (int i=1;i<n;i++) {
+            for (int j=1;j<m;j++) {
+                sum[i][j]=mat[i][j]+sum[i-1][j]+sum[i][j-1]-sum[i-1][j-1];                
+            }
+        }
+        
+
+        
+        
+        for (int i=0;i<n;i++) {
+            for (int j=0;j<m;j++) {
+                
+                int ti=-1;
+                int tj=-1;
+                int bi=-1;
+                int bj=-1;
+                
+                if (i-k>=0) {
+                    ti=i-k;
+                } else {
+                    ti=0;
+                }
+                
+                if (j-k>=0) {
+                    tj=j-k;
+                } else {
+                    tj=0;
+                }
+                
+                if (i+k<n) {
+                    bi=i+k;
+                } else {
+                    bi=n-1;
+                }
+                
+                if (j+k<m) {
+                    bj=j+k;
+                } else {
+                    bj=m-1;
+                }
+                
+               // System.out.println(ti+" "+tj+" "+bi+" "+bj);
+                
+                mat[i][j]=getSum(sum,ti,tj,bi,bj);
+                
+                
+            }
+        }
+        
+        return mat;
+        
+        
+        
+    }
+}
