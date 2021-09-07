@@ -1,0 +1,78 @@
+https://leetcode.com/problems/permutation-in-string/
+
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        
+        int n1=s1.length();
+        int n2=s2.length();
+        
+        if (n1>n2) {
+            return false;
+        }
+        
+        int re=n1;
+        Map <Character,Integer> req = new HashMap<>();
+        
+        for (int i=0;i<n1;i++) {
+            char c=s1.charAt(i);
+            if (req.containsKey(c)) {
+                req.put(c,req.get(c)+1);
+            } else {
+                req.put(c,1);
+            }
+        }
+        
+        
+        Map <Character,Integer> extra = new HashMap<>();
+        for (int i=0;i<n1;i++) {
+            char c = s2.charAt(i);
+            if (req.containsKey(c) && req.get(c)>0) {
+                req.put(c,req.get(c)-1);
+                re--;
+            } else {
+                if (extra.containsKey(c)) {
+                     extra.put(c,extra.get(c)+1);
+                 } else {
+                    extra.put(c,1);
+                }
+            }
+        }
+        
+        if (re==0) {
+            return true;
+        }
+        
+        for (int i=n1;i<n2;i++) {
+            char add = s2.charAt(i);
+            char rem = s2.charAt(i-n1);
+            if (req.containsKey(add) && req.get(add)>0) {
+                req.put(add,req.get(add)-1);
+                re--;
+            } else {
+                if (extra.containsKey(add)) {
+                     extra.put(add,extra.get(add)+1);
+                 } else {
+                    extra.put(add,1);
+                }
+            }
+            
+            if (extra.containsKey(rem) && extra.get(rem)>0) {
+                extra.put(rem,extra.get(rem)-1);
+            } else {
+                req.put(rem,req.get(rem)+1);
+                re++;
+            }
+            
+            if (re==0) {
+                return true;
+            }
+            
+        }
+        
+        return false;
+        
+        
+        
+    }
+}
