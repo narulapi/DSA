@@ -1,0 +1,101 @@
+https://codeforces.com/problemset/problem/835/C
+
+
+import java.io.*;
+
+
+public class Sample {
+
+	
+	public static int getVal(int arr[][], int x1,int y1,int x2,int y2 ) {
+		
+		return arr[x2][y2]-arr[x1-1][y2]-arr[x2][y1-1]+arr[x1-1][y1-1];
+		
+	}
+	
+	public static void main(String args[]) throws Exception{
+			
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    String s=br.readLine();
+	   
+	    String temp[] = s.split(" ");
+	    
+	    int n = Integer.parseInt(temp[0]);
+	    int q = Integer.parseInt(temp[1]);
+	    int c = Integer.parseInt(temp[2]);
+	    
+	    int x_cor[]=new int[n];
+	    int y_cor[]=new int[n];
+	    int s_val[]=new int[n];
+	    
+	    for (int i=0;i<n;i++) {
+	    	s=br.readLine();
+	    	temp = s.split(" ");
+	    	int x = Integer.parseInt(temp[0]);
+	    	int y = Integer.parseInt(temp[1]);
+	    	int si = Integer.parseInt(temp[2]);
+	    	
+	         x_cor[i]=x;
+	         y_cor[i]=y;
+	         s_val[i]=si;	    	
+	    }
+	    
+	    
+	    int pre_comp [][][] = new int[c+1][101][101];
+	    
+	    for (int t=0;t<c+1;t++) {
+	    	int arr[][] = new int[101][101];
+	    	for (int i=0;i<n;i++) {
+	    		int intensity = (s_val[i] + t) % (c+1);
+	    		if (arr[x_cor[i]][y_cor[i]] == 0) {
+	    			arr[x_cor[i]][y_cor[i]] = intensity;
+	    		} else {
+	    			arr[x_cor[i]][y_cor[i]] = arr[x_cor[i]][y_cor[i]] + intensity;
+	    		}
+	    	}
+	    	
+	    	
+	    	for (int i=2;i<101;i++) {
+	    		arr[i][1]=arr[i][1]+arr[i-1][1];
+	    	}
+	    	
+	    	for (int j=2;j<101;j++) {
+	    		arr[1][j]=arr[1][j]+arr[1][j-1];
+	    	}
+	    	
+	    	for (int i=2;i<101;i++) {
+	    		for (int j=2;j<101;j++) {
+	    			arr[i][j]=arr[i][j] + arr[i-1][j]+ arr[i][j-1] - arr[i-1][j-1];
+	    		}
+	    	}
+	    			    	
+	    	pre_comp[t]=arr;
+	    	
+	    }
+	    
+	    
+	    
+	    for (int i=0;i<q;i++) {
+	    	s=br.readLine();
+	    	temp = s.split(" ");
+	    	
+	    	int t = Integer.parseInt(temp[0]);
+	    	int x1 = Integer.parseInt(temp[1]);
+	    	int y1 = Integer.parseInt(temp[2]);
+	    	int x2 = Integer.parseInt(temp[3]);
+	    	int y2 = Integer.parseInt(temp[4]);
+	    	
+	    	t=t%(c+1);
+	    	
+	    	int arr[][] = pre_comp[t];
+
+	    	
+	    	int ans = getVal(arr,x1,y1,x2,y2);
+	    	
+	    	System.out.println(ans);
+    	
+	    	
+	    }	    
+	    
+	}
+}
