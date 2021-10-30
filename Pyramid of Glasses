@@ -1,0 +1,85 @@
+https://codeforces.com/contest/676/problem/B
+
+
+package project1;
+import java.io.*;
+import java.util.*;
+
+
+public class Sample {
+	
+	public static void fill(double arr[],double amount,int index,Map<Integer,Integer> map,int size) {
+		
+		if (index>=size || amount == 0) {
+			return;
+		}
+		
+		int lchild=index+map.get(index);
+		int rchild=lchild+1;
+		
+		if (arr[index]==1) {
+			fill(arr,amount/2,lchild,map,size);
+			fill(arr,amount/2,rchild,map,size);
+		} else {
+			
+			if (arr[index]+amount > 1) {
+				arr[index]=1;
+				double rem = arr[index]+amount -1;
+				fill(arr,rem/2,lchild,map,size);
+				fill(arr,rem/2,rchild,map,size);
+				
+			} else {
+				
+				arr[index] = arr[index]+amount;
+			}
+			
+		}
+		
+		
+		
+	}
+	public static void main(String args[]) throws Exception{
+		
+			
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    String s=br.readLine();
+	    
+	    String [] temp=s.split(" ");
+	    
+	    int n=Integer.parseInt(temp[0]);
+	    int t=Integer.parseInt(temp[1]);
+	    
+	    int size = (n*(n+1))/2;
+	    double arr[] = new double[size+1];
+	    
+	    Map<Integer,Integer> map=new HashMap<>();
+	    
+	    int k=0;
+	    for (int i=1;i<=n;i++) {
+	    	for (int j=1;j<=i;j++) {
+	    		k++;
+	    		map.put(k, i);
+	    	}
+	    }
+	    
+	    for (int i=1;i<=t;i++) {
+	    	fill(arr,1,1,map,size+1);
+	    }
+	    
+	    int ans = 0;
+	    
+	    for (int i=1;i<size+1;i++) {
+	    	if (arr[i] == 1) {
+	    		ans++;
+	    	}
+	    }
+	    
+	    System.out.println(ans);
+	    
+	    
+	    
+	    
+	    
+	    
+	}
+}
