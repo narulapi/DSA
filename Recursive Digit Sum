@@ -1,0 +1,39 @@
+https://www.hackerrank.com/challenges/recursive-digit-sum/problem
+
+
+
+class Result {
+
+    /*
+     * Complete the 'superDigit' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING n
+     *  2. INTEGER k
+     */
+     
+    public static int fun(String st) {
+        int n=st.length();
+        if (n == 1 ) {
+            return Character.getNumericValue(st.charAt(0));
+        }
+        
+        int temp=0;
+        
+        for (int i=0;i<n;i++) {
+            temp=temp+Character.getNumericValue(st.charAt(i));
+        }
+        
+        return fun(Integer.toString(temp));
+        
+    }  
+
+    public static int superDigit(String n, int k) {
+      
+      return fun(Integer.toString(fun(n) * fun(Integer.toString(k)))); 
+    // Write your code here
+
+    }
+
+}
