@@ -1,0 +1,63 @@
+https://codeforces.com/contest/727/problem/A
+
+
+import java.io.*;
+import java.util.*;
+
+
+public class Sample {
+	
+	static boolean found = false;
+	public static void fun(ArrayList<Long> list,long a,long b) {
+		if (found || a>b) {
+			return;
+		}
+		if (a==b) {
+			found=true;
+			System.out.println("YES");
+			System.out.println(list.size());
+			for (int i=0;i<list.size();i++) {
+				System.out.print(list.get(i) + " ");
+			}
+			
+			return;
+		
+		}
+		
+		list.add(a*2);
+		fun(list,a*2,b);
+		
+		list.set(list.size()-1, (a*10)+1);
+		fun(list,(a*10)+1,b);
+		
+		list.remove(list.size()-1);
+			
+		
+	}
+	
+	public static void main(String args[]) throws Exception{
+		
+			
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    String s=br.readLine();
+	    
+	    
+	    String temp[]=s.split(" ");
+	    long a = Long.parseLong(temp[0]);
+	    long b = Long.parseLong(temp[1]);
+	    
+	    ArrayList<Long> list = new ArrayList<Long> ();
+	    
+	    list.add(a);
+	    
+	    
+	    fun(list,a,b);
+	    
+	    if (! found) {
+	    	System.out.println("NO");
+	    }
+	    
+	    
+	    
+	}
+}
