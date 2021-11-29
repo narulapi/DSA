@@ -1,0 +1,54 @@
+https://leetcode.com/problems/restore-ip-addresses/submissions/
+
+class Solution {
+    public void fun (String s,String temp,int dots,int index,ArrayList<String> ans,int n) {
+        if (index > n-1 || dots>3) {
+            return;
+        }
+        
+        if (dots == 3) {
+            String t = s.substring(index);
+            if (!(t.charAt(0)=='0') && t.length() >=2 && t.length() <=3 && Integer.parseInt(t) <= 255) {
+                temp = temp +t;
+                ans.add(temp);
+            }
+            if (t.length() == 1) {
+                temp = temp +t;
+                ans.add(temp);
+            }
+            return;  
+        }
+        
+        if (s.charAt(index)=='0') {
+            temp=temp+'0'+'.';
+            fun(s,temp,dots+1,index+1,ans, n);
+        } else {
+            
+            fun (s,temp+s.charAt(index)+'.',dots+1,index+1,ans, n);
+            if (index+1<=n-1) {
+                String t = s.substring(index,index+2);
+                fun(s,temp+t+'.',dots+1,index+2,ans, n);
+            }
+            
+            if (index+2 <=n-1) {
+                String t = s.substring(index,index+3);
+                if (Integer.parseInt(t)<=255) {
+                  fun(s,temp+t+'.',dots+1,index+3,ans, n);  
+                }
+            }
+            
+        }
+        
+        
+    }
+    public List<String> restoreIpAddresses(String s) {
+        
+        ArrayList<String> ans = new ArrayList<> ();
+        int n = s.length();
+        
+        fun (s,"",0,0,ans,n);
+        
+        return ans;
+        
+    }
+}
