@@ -1,0 +1,70 @@
+https://codeforces.com/contest/55/problem/B
+
+import java.util.*;
+import java.io.*;
+public class Solution {
+	
+	public static long perf(long a ,long b , String op) {
+		if (op.equals("+")) {
+			return a+b;
+		} else {
+			return a*b;
+		}
+		
+	}
+	static long ans = Long.MAX_VALUE;
+	public static void fun(ArrayList<Long> arr,String temp[],int ind,int size,boolean vi[]) {
+		if (size == 1) {
+			for (int i=0;i<arr.size();i++) {
+				if (vi[i]==false) {
+					if (arr.get(i)<ans) {
+						ans=arr.get(i);
+					}
+				}
+			}
+			return;
+		}
+		for (int i=0;i<arr.size();i++) {
+			for (int j=i+1;j<arr.size();j++) {
+				if (vi[i]==false && vi[j]==false) {
+
+					long ti=arr.get(i);
+					long tj=arr.get(j);
+					vi[j]=true;
+					arr.set(i,perf(ti,tj,temp[ind]));
+					fun(arr,temp,ind+1,size-1,vi);
+					vi[j]=false;
+					arr.set(i, ti);
+					
+			}
+		}}
+		
+	}
+	
+	public static void main(String args[]) throws Exception{
+		BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+		String temp[] = br.readLine().split(" ");
+		long a = Long.parseLong(temp[0]);
+		long b = Long.parseLong(temp[1]);
+		long c = Long.parseLong(temp[2]);
+		long d = Long.parseLong(temp[3]);
+		
+		ArrayList<Long> arr = new ArrayList<> ();
+		arr.add(a);
+		arr.add(b);
+		arr.add(c);
+		arr.add(d);
+		
+		temp = br.readLine().split(" ");
+		
+		boolean vi[] = new boolean[4];
+		
+		
+		fun(arr,temp,0,4,vi);
+		
+		
+		System.out.println(ans);
+		
+		
+	}
+}
