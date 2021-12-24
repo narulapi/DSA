@@ -1,0 +1,88 @@
+package project1;
+
+public class DoublyLinkList {
+	
+	Node head = null;
+	Node tail = null;
+	
+	
+	public void addAtFront(int data) {
+		Node temp = new Node(data);
+		if (head == null) {
+			head = temp;
+			tail = temp;
+			return;
+		}
+		
+		head.prev=temp;
+		temp.next=head;
+		
+		head=temp;
+	
+		
+	}
+	
+	public void addAtEnd(int data) {
+		Node temp = new Node(data);
+		if (tail == null && head == null) {
+			head=temp;
+			tail=temp;
+			return;
+		}
+		
+		
+		
+		temp.prev=tail;
+		tail.next=temp;
+		
+		tail=temp;
+		return;
+		
+		
+	}
+	
+	
+	public void searchAndRemove (int data) {
+		if (head ==null) {
+			return;
+		}
+		
+		Node temp = head;
+		
+		while (temp!= null & temp.data!= data) {
+			temp = temp.next;
+		}
+		
+		if (temp==null) {
+			// data do not exist
+			return;
+		}
+		
+		Node previousNode = temp.prev;
+		Node nextNode = temp.next;
+		
+		if (previousNode != null ) {
+			previousNode.next = nextNode;
+		}
+		
+		if (nextNode!= null) {
+			nextNode.prev = previousNode;
+		}
+	}
+	
+	public void printLinkList() {
+		if (head == null) {
+			System.out.println(" LinkList is Empty");
+			return;
+		}
+		
+		Node temp = head;
+		while (temp != null) {
+			System.out.print(temp.data+ " ");
+			temp = temp.next;
+		}
+		
+		
+	}
+
+}
