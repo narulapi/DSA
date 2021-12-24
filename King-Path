@@ -1,0 +1,153 @@
+package project1;
+import java.io.*;
+import java.util.*;
+
+// addition at start & end
+// search for a node and remove that node
+
+
+
+
+import java.io.*;
+import java.util.*;
+
+
+
+public class Sample {
+	
+	public static void main(String []args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		boolean vi [][]= new boolean[8][8];
+		String s = br.readLine();
+		int stj = s.charAt(0)-'a';
+		int sti = 8 - Character.getNumericValue(s.charAt(1));
+		
+		s = br.readLine();
+		int enj = s.charAt(0)-'a';
+		int eni = 8 - Character.getNumericValue(s.charAt(1));
+		
+		temp t = new temp(sti,stj,0,new String[8],0);
+		
+		Queue<temp> q = new LinkedList<>();
+		vi[sti][stj]=true;
+		q.add(t);
+		
+		temp found = null;
+		
+		while (q.size()!=0) {
+			temp mid = q.remove();
+			System.out.println(mid.i + "    "+mid.j);
+			if (mid.i==eni && mid.j==enj) {
+				found = mid;
+				break;
+			}
+			String path[] = mid.path;
+			int index = mid.index;
+			int ans = mid.ans;
+			int i = mid.i;
+			int j= mid.j;
+			
+			if (i-1>=0 && vi[i-1][j]==false) {
+				System.out.println("U");
+				vi[i-1][j]=true;
+				path[index]="U";
+				q.add(new temp(i-1,j,ans+1,path,index+1));
+				
+			}
+			
+			if (i+1<8 && vi[i+1][j]==false) {
+				System.out.println("D");
+				vi[i+1][j]=true;
+				path[index]="D";
+				q.add(new temp(i+1,j,ans+1,path,index+1));
+				
+			}
+			
+			if (j-1>=0 && vi[i][j-1] ==false) {
+				System.out.println("L");
+				vi[i][j-1] = true;
+				path[index]="L";
+				q.add(new temp(i,j-1,ans+1,path,index+1));
+				
+			}
+			
+			if (j+1<8 && vi[i][j+1] ==false) {
+				System.out.println("R");
+				vi[i][j+1] = true;
+				path[index]="R";
+				q.add(new temp(i,j+1,ans+1,path,index+1));				
+			}
+			
+			if (i-1>=0 && j-1>=0 && vi[i-1][j-1] ==false) {
+				System.out.println("LU");
+				vi[i-1][j-1] = true;
+				path[index]="LU";
+				q.add(new temp(i-1,j-1,ans+1,path,index+1));
+				
+			}
+			
+			if (i+1<8 && j+1<8 && vi[i+1][j+1] ==false) {
+				System.out.println("RD");
+				vi[i+1][j+1] = true;
+				path[index]="RD";
+				q.add(new temp(i+1,j+1,ans+1,path,index+1));
+				
+			}
+			
+			if (i+1<8 && j-1>=0 && vi[i+1][j-1] ==false) {
+				System.out.println("LD");
+				vi[i+1][j-1] = true;
+				path[index]="LD";
+				q.add(new temp(i+1,j-1,ans+1,path,index+1));
+				
+			}
+			
+			if (i-1>0 && j+1<8 && vi[i-1][j+1]==false) {
+				System.out.println("RU");
+				vi[i-1][j+1] = true;
+				path[index]="RU";
+				q.add(new temp(i-1,j+1,ans+1,path,index+1));
+			}			
+				
+			
+			
+			
+		}
+		
+		if (found != null) {
+			System.out.println(found.ans);
+			String path[] = found.path;
+			int ans = found.ans;
+			for (int i=0;i<ans;i++) {
+				System.out.println(path[i]);
+			}
+			
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+
+
+class temp {
+	int i;
+	int j;
+	int ans;
+	String path[] ;
+	int index;
+	temp (int i,int j,int ans,String path[],int index) {
+		this.i = i;
+		this.j=j;
+		this.ans=ans;
+		this.path=path;
+		this.index=index;
+	}
+}
