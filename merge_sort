@@ -1,0 +1,60 @@
+package leetcode;
+
+public class MergeSort {
+    static void mergeSort(int arr[], int l, int r) {
+
+        if (l>=r) {
+            return;
+        }
+
+        int mid = (l+r)/2;
+
+        mergeSort(arr,l,mid);
+        mergeSort(arr,mid+1,r);
+
+        int []temp = new int[r-l+1];
+
+        int n = temp.length;
+
+        int i = 0;
+        int left = l;
+        int right = mid+1;
+        while (i<n && left<=mid && right <= r) {
+            if (arr[left]<arr[right]) {
+                temp[i]=arr[left];
+                left++;
+            } else {
+                temp[i]=arr[right];
+                right++;
+            }
+            i++;
+        }
+
+        while (left<=mid) {
+            temp[i]=arr[left];
+            left++;
+            i++;
+        }
+
+        while (right<=r) {
+            temp[i]=arr[right];
+            right++;
+            i++;
+        }
+
+        for (int ptr = l;ptr<=r;ptr++) {
+            arr[ptr]=temp[ptr-l];
+        }
+
+
+
+    }
+
+    public static void main(String[] args) {
+        int arr[] = new int[]{5,1,1,2,0,0};
+        mergeSort(arr,0,arr.length-1);
+        for (int i:arr) {
+            System.out.print(i+" ");
+        }
+    }
+}
