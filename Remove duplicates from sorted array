@@ -1,0 +1,69 @@
+https://www.geeksforgeeks.org/problems/union-of-two-sorted-arrays-1587115621/1
+
+package leetcode;
+
+import java.util.ArrayList;
+
+public class Union2SortedArrays {
+    public static ArrayList<Integer> findUnion(int a[], int b[]) {
+        int aLength = a.length;
+        int bLength = b.length;
+
+        int aPtr = 0;
+        int bPtr = 0;
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        while (aPtr<aLength && bPtr<bLength) {
+            int element = 0;
+
+            if (a[aPtr] == b[bPtr]) {
+                element = a[aPtr];
+                aPtr++;
+                bPtr++;
+            } else if (a[aPtr]<b[bPtr]) {
+                element = a[aPtr];
+                aPtr++;
+            } else {
+                element = b[bPtr];
+                bPtr++;
+            }
+
+            if (ans.isEmpty()) {
+                ans.add(element);
+            } else {
+                if (ans.get(ans.size()-1) != element) {
+                    ans.add(element);
+                }
+            }
+
+        }
+
+        while (aPtr<aLength) {
+            int element = a[aPtr];
+            aPtr++;
+            if (ans.isEmpty()) {
+                ans.add(element);
+            } else {
+                if (ans.get(ans.size()-1) != element) {
+                    ans.add(element);
+                }
+            }
+        }
+
+        while (bPtr<bLength) {
+            int element = b[bPtr];
+            bPtr++;
+            if (ans.isEmpty()) {
+                ans.add(element);
+            } else {
+                if (ans.get(ans.size()-1) != element) {
+                    ans.add(element);
+                }
+            }
+
+        }
+
+        return ans;
+    }
+}
